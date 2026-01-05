@@ -49,7 +49,7 @@ const EditContractModal = ({ contract, mode, onSave, onClose }) => {
               value={formData.contract_name}
               onChange={handleChange}
               required
-              placeholder="E.g.: example@gmail.com, 0123456789, zalo_id"
+              placeholder="E.g.: example@gmail.com, 0123456789, https://facebook.com/username"
             />
           </div>
 
@@ -65,6 +65,10 @@ const EditContractModal = ({ contract, mode, onSave, onClose }) => {
               <option value="email">Email</option>
               <option value="phone">Phone</option>
               <option value="zalo">Zalo</option>
+              <option value="facebook">Facebook</option>
+              <option value="instagram">Instagram</option>
+              <option value="github">GitHub</option>
+              <option value="link">Link</option>
             </select>
           </div>
 
