@@ -418,7 +418,7 @@ const ProfileComp = () => {
           {/* Achievements Section */}
           {loading && achievements.length === 0 ? (
             <section className="profile-section">
-              <h2 className="section-title">Thành Tựu</h2>
+              <h2 className="section-title">Achievements</h2>
               <div className="achievements-list">
                 {[1, 2].map((i) => (
                   <div key={i} className="achievement-item skeleton-pulse">
@@ -430,7 +430,7 @@ const ProfileComp = () => {
             </section>
           ) : achievements && achievements.length > 0 ? (
             <section className="profile-section fade-in">
-              <h2 className="section-title">Thành Tựu</h2>
+              <h2 className="section-title">Achievements</h2>
               <div className="achievements-list">
                 {achievements.map((achievement) => (
                   <div key={achievement.id} className="achievement-item">
