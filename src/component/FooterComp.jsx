@@ -41,11 +41,11 @@ const FooterComp = ({ contacts = [] }) => {
       case 'email':
         return 'Email';
       case 'phone':
-        return 'Điện thoại';
+        return 'Phone';
       case 'zalo':
         return 'Zalo';
       default:
-        return 'Liên hệ';
+        return 'Contact';
     }
   };
 
@@ -56,14 +56,14 @@ const FooterComp = ({ contacts = [] }) => {
   return (
     <footer className="footer-container">
       <div className="footer-content">
-        <h3 className="footer-title">Liên Hệ</h3>
+        <h3 className="footer-title">Contact</h3>
         <div className="contacts-list">
           {contacts.map((contact) => (
             <div
               key={contact.id}
               className="contact-item"
               onClick={() => handleContactClick(contact)}
-              title={`Click để ${getContactLabel(contact.status)}`}
+              title={`Click to ${getContactLabel(contact.status)}`}
             >
               <span className="contact-icon">{getContactIcon(contact.status)}</span>
               <span className="contact-label">{getContactLabel(contact.status)}:</span>

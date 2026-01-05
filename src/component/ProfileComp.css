@@ -585,13 +585,13 @@
 /* Timeline */
 .timeline {
   position: relative;
-  padding-left: var(--spacing-2xl);
+  padding-left: 30px;
 }
 
 .timeline::before {
   content: '';
   position: absolute;
-  left: 10px;
+  left: 11px;
   top: 0;
   bottom: 0;
   width: 3px;
@@ -599,17 +599,16 @@
   border-radius: var(--radius-full);
 }
 
-.timeline-item {
+.timeline-item-wrapper {
+  display: flex;
+  align-items: flex-start;
   position: relative;
   margin-bottom: var(--spacing-2xl);
-  padding-left: var(--spacing-2xl);
-  animation: slideInLeft 0.5s ease-out;
 }
 
-.timeline-item::before {
-  content: '';
+.timeline-dot {
   position: absolute;
-  left: -24px;
+  left: -26px;
   top: 8px;
   width: 16px;
   height: 16px;
@@ -619,11 +618,17 @@
   box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
   transition: all var(--transition-base);
   z-index: 1;
+  flex-shrink: 0;
 }
 
-.timeline-item:hover::before {
+.timeline-item-wrapper:hover .timeline-dot {
   transform: scale(1.3);
   border-color: var(--secondary-color);
+}
+
+.timeline-item {
+  flex: 1;
+  animation: slideInLeft 0.5s ease-out;
 }
 
 .timeline-content {
@@ -661,8 +666,17 @@
 .timeline-description {
   font-size: 0.95rem;
   color: var(--text-secondary);
-  line-height: 1.7;
+  line-height: 1.8;
   margin-top: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: rgba(102, 126, 234, 0.03);
+  border-left: 3px solid rgba(102, 126, 234, 0.2);
+  border-radius: var(--radius-md);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  text-align: left;
+  letter-spacing: 0.01em;
 }
 
 /* Skills Grid */
@@ -1003,11 +1017,24 @@
   }
 
   .timeline {
-    padding-left: var(--spacing-lg);
+    padding-left: 20px;
   }
 
-  .timeline-item {
-    padding-left: var(--spacing-lg);
+  .timeline::before {
+    left: 8px;
+  }
+
+  .timeline-dot {
+    left: -18px;
+    width: 12px;
+    height: 12px;
+    border-width: 3px;
+  }
+
+  .timeline-description {
+    font-size: 0.875rem;
+    padding: var(--spacing-sm) var(--spacing-md);
+    line-height: 1.75;
   }
 
   .skills-grid {
@@ -1035,6 +1062,10 @@
 
   .products-grid {
     grid-template-columns: 1fr;
+  }
+
+  .product-images-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -1080,5 +1111,9 @@
 
   .meta-icon {
     font-size: 0.9rem;
+  }
+
+  .product-images-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }

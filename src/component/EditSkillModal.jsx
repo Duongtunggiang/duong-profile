@@ -37,31 +37,31 @@ const EditSkillModal = ({ skill, mode, onSave, onClose }) => {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2>{mode === 'edit' ? 'Chỉnh sửa' : 'Thêm'} Kỹ Năng</h2>
+          <h2>{mode === 'edit' ? 'Edit' : 'Add'} Skill</h2>
           <button className="modal-close" onClick={onClose}>×</button>
         </div>
         <form onSubmit={handleSubmit} className="modal-form">
           <div className="form-group">
-            <label>Tên kỹ năng *</label>
+            <label>Skill Name *</label>
             <input
               type="text"
               name="skill_name"
               value={formData.skill_name}
               onChange={handleChange}
               required
-              placeholder="Ví dụ: JavaScript, Python, React..."
+              placeholder="E.g.: JavaScript, Python, React..."
             />
           </div>
 
           <div className="form-group">
-            <label>Mức độ *</label>
+            <label>Proficiency Level *</label>
             <select
               name="level"
               value={formData.level}
               onChange={handleChange}
               required
             >
-              <option value="">Chọn mức độ...</option>
+              <option value="">Select level...</option>
               <option value="Beginner">Beginner</option>
               <option value="Intermediate">Intermediate</option>
               <option value="Advanced">Advanced</option>
@@ -71,10 +71,10 @@ const EditSkillModal = ({ skill, mode, onSave, onClose }) => {
 
           <div className="modal-actions">
             <button type="button" className="btn-cancel" onClick={onClose}>
-              Hủy
+              Cancel
             </button>
             <button type="submit" className="btn-save">
-              {mode === 'edit' ? 'Cập nhật' : 'Thêm'}
+              {mode === 'edit' ? 'Update' : 'Add'}
             </button>
           </div>
         </form>

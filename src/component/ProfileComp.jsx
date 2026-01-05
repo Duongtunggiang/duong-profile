@@ -49,7 +49,15 @@ const ProfileComp = () => {
         }, 150);
         
         setTimeout(() => {
-          setJobs(data.jobs?.data || data.jobs || []);
+          const jobsData = data.jobs?.data || data.jobs || [];
+          // Sắp xếp jobs theo start_date giảm dần (mới nhất trước)
+          const sortedJobs = [...jobsData].sort((a, b) => {
+            if (!a.start_date && !b.start_date) return 0;
+            if (!a.start_date) return 1; // Không có start_date xếp cuối
+            if (!b.start_date) return -1;
+            return new Date(b.start_date) - new Date(a.start_date);
+          });
+          setJobs(sortedJobs);
         }, 200);
         
         setTimeout(() => {
@@ -108,7 +116,7 @@ const ProfileComp = () => {
   const formatDate = (dateString) => {
     if (!dateString) return '';
     const date = new Date(dateString);
-    return date.toLocaleDateString('vi-VN', { year: 'numeric', month: 'long', day: 'numeric' });
+    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
   };
 
   // Skeleton component cho profile header
@@ -168,7 +176,7 @@ const ProfileComp = () => {
             <h1 className="profile-name">
               {profile.first_name || profile.last_name
                 ? `${profile.first_name || ''} ${profile.last_name || ''}`.trim()
-                : profile.nickname || 'Chưa có tên'}
+                : profile.nickname || 'No name'}
             </h1>
             {profile.nickname && (
               <p className="profile-nickname">@{profile.nickname}</p>
@@ -201,8 +209,8 @@ const ProfileComp = () => {
       ) : (
         <div className="profile-header">
           <div className="empty-profile">
-            <h2>Chưa có thông tin profile</h2>
-            <p>Vui lòng đăng nhập để tạo profile của bạn.</p>
+            <h2>No profile information</h2>
+            <p>Please log in to create your profile.</p>
           </div>
         </div>
       )}
@@ -211,7 +219,7 @@ const ProfileComp = () => {
       {loading && targets.length === 0 ? (
         <div className="target-section">
           <section className="profile-section">
-            <h2 className="section-title">Mục Tiêu Nghề Nghiệp</h2>
+            <h2 className="section-title">Career Goals</h2>
             <div className="target-content">
               <div className="target-item skeleton-pulse">
                 <div className="skeleton-line skeleton-text-line"></div>
@@ -223,7 +231,7 @@ const ProfileComp = () => {
       ) : targets && targets.length > 0 ? (
         <div className="target-section fade-in">
           <section className="profile-section">
-            <h2 className="section-title">Mục Tiêu Nghề Nghiệp</h2>
+            <h2 className="section-title">Career Goals</h2>
             <div className="target-content">
               {targets.map((target) => (
                 <p key={target.id} className="target-text">{target.target}</p>
@@ -240,7 +248,7 @@ const ProfileComp = () => {
           {/* Skills Section - Above Languages */}
           {loading && skills.length === 0 ? (
             <section className="profile-section">
-              <h2 className="section-title">Kỹ Năng</h2>
+              <h2 className="section-title">Skills</h2>
               <div className="skills-grid">
                 {[1, 2, 3].map((i) => (
                   <div key={i} className="skill-item skeleton-pulse">
@@ -251,7 +259,7 @@ const ProfileComp = () => {
             </section>
           ) : skills && skills.length > 0 ? (
             <section className="profile-section fade-in">
-              <h2 className="section-title">Kỹ Năng</h2>
+              <h2 className="section-title">Skills</h2>
               <div className="skills-grid">
                 {skills.map((skill) => (
                   <div key={skill.id} className="skill-item">
@@ -266,7 +274,7 @@ const ProfileComp = () => {
           {/* Languages Section */}
           {loading && languages.length === 0 ? (
             <section className="profile-section">
-              <h2 className="section-title">Ngôn Ngữ</h2>
+              <h2 className="section-title">Languages</h2>
               <div className="skills-grid">
                 {[1, 2].map((i) => (
                   <div key={i} className="skill-item skeleton-pulse">
@@ -277,7 +285,7 @@ const ProfileComp = () => {
             </section>
           ) : languages && languages.length > 0 ? (
             <section className="profile-section fade-in">
-              <h2 className="section-title">Ngôn Ngữ</h2>
+              <h2 className="section-title">Languages</h2>
               <div className="skills-grid">
                 {languages.map((lang) => (
                   <div key={lang.id} className="skill-item">
@@ -292,7 +300,7 @@ const ProfileComp = () => {
           {/* Images Section */}
           {loading && images.length === 0 ? (
             <section className="profile-section">
-              <h2 className="section-title">Hình Ảnh</h2>
+              <h2 className="section-title">Images</h2>
               <div className="images-grid-sidebar">
                 {[1, 2, 3, 4].map((i) => (
                   <div key={i} className="image-item skeleton-pulse">
@@ -303,7 +311,7 @@ const ProfileComp = () => {
             </section>
           ) : images && images.length > 0 ? (
             <section className="profile-section fade-in">
-              <h2 className="section-title">Hình Ảnh</h2>
+              <h2 className="section-title">Images</h2>
               <div className="images-grid-sidebar">
                 {images.slice(0, 4).map((image) => (
                   <div 
@@ -320,7 +328,7 @@ const ProfileComp = () => {
                 ))}
               </div>
               {images.length > 4 && (
-                <p className="view-more">+{images.length - 4} ảnh khác</p>
+                <p className="view-more">+{images.length - 4} more images</p>
               )}
             </section>
           ) : null}
@@ -331,7 +339,7 @@ const ProfileComp = () => {
           {/* Education Section */}
           {loading && educations.length === 0 ? (
             <section className="profile-section">
-              <h2 className="section-title">Học Vấn</h2>
+              <h2 className="section-title">Education</h2>
               <div className="timeline">
                 {[1, 2].map((i) => (
                   <div key={i} className="timeline-item">
@@ -346,7 +354,7 @@ const ProfileComp = () => {
             </section>
           ) : educations && educations.length > 0 ? (
             <section className="profile-section fade-in">
-              <h2 className="section-title">Học Vấn</h2>
+              <h2 className="section-title">Education</h2>
               <div className="timeline">
                 {educations.map((edu) => (
                   <div key={edu.id} className="timeline-item">
@@ -368,7 +376,7 @@ const ProfileComp = () => {
           {/* Jobs Section */}
           {loading && jobs.length === 0 ? (
             <section className="profile-section">
-              <h2 className="section-title">Kinh Nghiệm Làm Việc</h2>
+              <h2 className="section-title">Work Experience</h2>
               <div className="timeline">
                 {[1, 2].map((i) => (
                   <div key={i} className="timeline-item">
@@ -383,10 +391,12 @@ const ProfileComp = () => {
             </section>
           ) : jobs && jobs.length > 0 ? (
             <section className="profile-section fade-in">
-              <h2 className="section-title">Kinh Nghiệm Làm Việc</h2>
+              <h2 className="section-title">Work Experience</h2>
               <div className="timeline">
                 {jobs.map((job) => (
-                  <div key={job.id} className="timeline-item">
+                  <div key={job.id} className="timeline-item-wrapper">
+                    <div className="timeline-dot"></div>
+                    <div className="timeline-item">
                     <div className="timeline-content">
                       <h3 className="timeline-title">
                         {job.job_name ? `${job.job_name} - ${job.company_name}` : job.company_name}
@@ -394,9 +404,10 @@ const ProfileComp = () => {
                       <div className="timeline-date">
                         {job.start_date && formatDate(job.start_date)}
                         {job.start_date && job.end_date && ' - '}
-                        {job.end_date || 'Hiện tại'}
+                          {job.end_date || 'Present'}
+                        </div>
+                        {job.description && <p className="timeline-description">{job.description}</p>}
                       </div>
-                      {job.description && <p className="timeline-description">{job.description}</p>}
                     </div>
                   </div>
                 ))}
@@ -436,7 +447,7 @@ const ProfileComp = () => {
           {/* Products Section */}
           {loading && products.length === 0 ? (
             <section className="profile-section">
-              <h2 className="section-title">Sản Phẩm</h2>
+              <h2 className="section-title">Products</h2>
               <div className="products-grid">
                 {[1, 2].map((i) => (
                   <div key={i} className="product-card skeleton-pulse">
@@ -452,7 +463,7 @@ const ProfileComp = () => {
             </section>
           ) : products && products.length > 0 ? (
             <section className="profile-section fade-in">
-              <h2 className="section-title">Sản Phẩm</h2>
+              <h2 className="section-title">Products</h2>
               <div className="products-grid">
                 {products.map((product) => {
                   const productImgs = productImages.filter(img => img.product_id === product.id);
@@ -476,7 +487,7 @@ const ProfileComp = () => {
                         {productImgs.length > 0 && (
                           <div className="product-images-section">
                             <div className="product-images-header">
-                              <span className="product-images-count">Ảnh mô tả ({productImgs.length})</span>
+                              <span className="product-images-count">Description Images ({productImgs.length})</span>
                             </div>
                             <div className="product-images-grid">
                                 {productImgs.map((img) => (
@@ -485,7 +496,7 @@ const ProfileComp = () => {
                                     className="product-img-item clickable-image"
                                     onClick={() => setSelectedImage({
                                       images_url: getImageUrl(img.image_url),
-                                      description: img.description || 'Ảnh mô tả sản phẩm',
+                                      description: img.description || 'Product description image',
                                       image_type: 'Ảnh mô tả'
                                     })}
                                   >

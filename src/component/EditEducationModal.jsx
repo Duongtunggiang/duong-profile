@@ -47,25 +47,25 @@ const EditEducationModal = ({ education, mode, onSave, onClose }) => {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2>{mode === 'edit' ? 'Chỉnh sửa' : 'Thêm'} Học Vấn</h2>
+          <h2>{mode === 'edit' ? 'Edit' : 'Add'} Education</h2>
           <button className="modal-close" onClick={onClose}>×</button>
         </div>
         <form onSubmit={handleSubmit} className="modal-form">
           <div className="form-group">
-            <label>Tên trường *</label>
+            <label>School Name *</label>
             <input
               type="text"
               name="school_name"
               value={formData.school_name}
               onChange={handleChange}
               required
-              placeholder="Nhập tên trường"
+              placeholder="Enter school name"
             />
           </div>
 
           <div className="form-row">
             <div className="form-group">
-              <label>Năm bắt đầu</label>
+              <label>Start Year</label>
               <input
                 type="date"
                 name="start_year"
@@ -74,7 +74,7 @@ const EditEducationModal = ({ education, mode, onSave, onClose }) => {
               />
             </div>
             <div className="form-group">
-              <label>Năm kết thúc</label>
+              <label>End Year</label>
               <input
                 type="date"
                 name="end_year"
@@ -85,22 +85,22 @@ const EditEducationModal = ({ education, mode, onSave, onClose }) => {
           </div>
 
           <div className="form-group">
-            <label>Mô tả</label>
+            <label>Description</label>
             <textarea
               name="description"
               value={formData.description}
               onChange={handleChange}
-              placeholder="Nhập mô tả"
+              placeholder="Enter description"
               rows="4"
             />
           </div>
 
           <div className="modal-actions">
             <button type="button" className="btn-cancel" onClick={onClose}>
-              Hủy
+              Cancel
             </button>
             <button type="submit" className="btn-save">
-              Lưu
+              Save
             </button>
           </div>
         </form>

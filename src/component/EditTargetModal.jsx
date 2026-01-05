@@ -34,28 +34,28 @@ const EditTargetModal = ({ target, mode, onSave, onClose }) => {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2>{mode === 'edit' ? 'Chỉnh sửa' : 'Thêm'} Mục Tiêu Nghề Nghiệp</h2>
+          <h2>{mode === 'edit' ? 'Edit' : 'Add'} Career Goal</h2>
           <button className="modal-close" onClick={onClose}>×</button>
         </div>
         <form onSubmit={handleSubmit} className="modal-form">
           <div className="form-group">
-            <label>Mục tiêu nghề nghiệp *</label>
+            <label>Career Goal *</label>
             <textarea
               name="target"
               value={formData.target}
               onChange={handleChange}
               required
-              placeholder="Nhập mục tiêu nghề nghiệp của bạn..."
+              placeholder="Enter your career goal..."
               rows="5"
             />
           </div>
 
           <div className="modal-actions">
             <button type="button" className="btn-cancel" onClick={onClose}>
-              Hủy
+              Cancel
             </button>
             <button type="submit" className="btn-save">
-              {mode === 'edit' ? 'Cập nhật' : 'Thêm'}
+              {mode === 'edit' ? 'Update' : 'Add'}
             </button>
           </div>
         </form>
@@ -65,4 +65,3 @@ const EditTargetModal = ({ target, mode, onSave, onClose }) => {
 };
 
 export default EditTargetModal;
-

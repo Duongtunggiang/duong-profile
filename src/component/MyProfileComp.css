@@ -208,9 +208,12 @@
   box-shadow: var(--shadow-md);
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: var(--spacing-sm);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  position: relative;
+  white-space: nowrap;
 }
 
 .add-btn:hover {
@@ -578,14 +581,30 @@
   }
 
   .section-header {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     gap: var(--spacing-md);
   }
 
   .add-btn {
-    width: 100%;
-    justify-content: center;
+    width: 44px;
+    min-width: 44px;
+    padding: var(--spacing-sm);
+    font-size: 0;
+    gap: 0;
+    position: relative;
+  }
+
+  .add-btn::after {
+    content: '+';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
   }
 
   .item-edit-controls {
@@ -613,6 +632,76 @@
 
   .target-section {
     padding: 0 var(--spacing-md);
+  }
+
+  .add-btn {
+    width: 40px;
+    min-width: 40px;
+    padding: var(--spacing-xs);
+  }
+
+  .add-btn::after {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .profile-edit-overlay {
+    bottom: var(--spacing-md);
+    right: var(--spacing-md);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: 0.7rem;
+  }
+
+  .add-btn {
+    width: 36px;
+    min-width: 36px;
+    padding: var(--spacing-xs);
+  }
+
+  .add-btn::after {
+    font-size: 1.125rem;
+  }
+
+  .edit-item-btn,
+  .delete-item-btn,
+  .add-image-btn {
+    width: 24px;
+    height: 24px;
+    font-size: 0.7rem;
+  }
+
+  .item-edit-controls {
+    top: var(--spacing-xs);
+    right: var(--spacing-xs);
+    gap: var(--spacing-xs);
+  }
+}
+
+@media (max-width: 280px) {
+  .profile-edit-overlay {
+    bottom: var(--spacing-sm);
+    right: var(--spacing-sm);
+    padding: var(--spacing-xs);
+    font-size: 0.65rem;
+  }
+
+  .add-btn {
+    width: 32px;
+    min-width: 32px;
+    padding: var(--spacing-xs);
+  }
+
+  .add-btn::after {
+    font-size: 1rem;
+  }
+
+  .edit-item-btn,
+  .delete-item-btn,
+  .add-image-btn {
+    width: 20px;
+    height: 20px;
+    font-size: 0.65rem;
   }
 }
 

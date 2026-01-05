@@ -25,15 +25,15 @@ const LoginComp = () => {
         setToken(response.access_token);
         setUser(response.user);
         
-        // Chuyển trang ngay lập tức, không dùng alert (alert có thể chặn navigation)
-        // Sử dụng window.location để đảm bảo chuyển trang
+        // Navigate immediately, don't use alert (alert can block navigation)
+        // Use window.location to ensure navigation
         window.location.href = '/my-profile';
       } else {
-        setError('Đăng nhập thất bại. Vui lòng thử lại.');
+        setError('Login failed. Please try again.');
         setLoading(false);
       }
     } catch (err) {
-      setError(err.message || 'Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.');
+      setError(err.message || 'Login failed. Please check your information.');
       setLoading(false);
     }
   };
@@ -43,7 +43,7 @@ const LoginComp = () => {
       <HeaderComp />
       <div className="login-container">
         <div className="login-card">
-          <h1 className="login-title">Đăng Nhập</h1>
+          <h1 className="login-title">Login</h1>
           <form onSubmit={handleSubmit} className="login-form">
             {error && <div className="error-message">{error}</div>}
             
@@ -55,24 +55,24 @@ const LoginComp = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                placeholder="Nhập email của bạn"
+                placeholder="Enter your email"
               />
             </div>
 
             <div className="form-group">
-              <label htmlFor="password">Mật khẩu</label>
+              <label htmlFor="password">Password</label>
               <input
                 type="password"
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                placeholder="Nhập mật khẩu"
+                placeholder="Enter password"
               />
             </div>
 
             <button type="submit" className="login-button" disabled={loading}>
-              {loading ? 'Đang đăng nhập...' : 'Đăng Nhập'}
+              {loading ? 'Logging in...' : 'Login'}
             </button>
           </form>
         </div>

@@ -125,7 +125,15 @@ const MyProfileComp = () => {
       }, 100);
       
       setTimeout(() => {
-        setJobs(jobsRes.data || []);
+        const jobsData = jobsRes.data || [];
+        // Sắp xếp jobs theo start_date giảm dần (mới nhất trước)
+        const sortedJobs = [...jobsData].sort((a, b) => {
+          if (!a.start_date && !b.start_date) return 0;
+          if (!a.start_date) return 1; // Không có start_date xếp cuối
+          if (!b.start_date) return -1;
+          return new Date(b.start_date) - new Date(a.start_date);
+        });
+        setJobs(sortedJobs);
         setLanguages(languagesRes.data || []);
         setSkills(skillsRes.data || []);
       }, 150);
@@ -162,7 +170,7 @@ const MyProfileComp = () => {
       await loadData();
       setEditProfileModal(false);
     } catch (error) {
-      alert('Cập nhật profile thất bại: ' + error.message);
+      alert('Profile update failed: ' + error.message);
     }
   };
 
@@ -176,17 +184,17 @@ const MyProfileComp = () => {
       await loadData();
       setEditImageModal({ open: false, image: null, mode: 'create' });
     } catch (error) {
-      alert('Lưu hình ảnh thất bại: ' + error.message);
+      alert('Save image failed: ' + error.message);
     }
   };
 
   const handleImageDelete = async (imageId) => {
-    if (window.confirm('Bạn có chắc muốn xóa hình ảnh này?')) {
+    if (window.confirm('Are you sure you want to delete this image?')) {
       try {
         await deleteImage(token, imageId);
         await loadData();
       } catch (error) {
-        alert('Xóa hình ảnh thất bại: ' + error.message);
+        alert('Delete image failed: ' + error.message);
       }
     }
   };
@@ -201,17 +209,17 @@ const MyProfileComp = () => {
       await loadData();
       setEditEducationModal({ open: false, education: null, mode: 'create' });
     } catch (error) {
-      alert('Lưu học vấn thất bại: ' + error.message);
+      alert('Save education failed: ' + error.message);
     }
   };
 
   const handleEducationDelete = async (educationId) => {
-    if (window.confirm('Bạn có chắc muốn xóa học vấn này?')) {
+    if (window.confirm('Are you sure you want to delete this education?')) {
       try {
         await deleteEducation(token, educationId);
         await loadData();
       } catch (error) {
-        alert('Xóa học vấn thất bại: ' + error.message);
+        alert('Delete education failed: ' + error.message);
       }
     }
   };
@@ -226,17 +234,17 @@ const MyProfileComp = () => {
       await loadData();
       setEditJobModal({ open: false, job: null, mode: 'create' });
     } catch (error) {
-      alert('Lưu công việc thất bại: ' + error.message);
+      alert('Save job failed: ' + error.message);
     }
   };
 
   const handleJobDelete = async (jobId) => {
-    if (window.confirm('Bạn có chắc muốn xóa công việc này?')) {
+    if (window.confirm('Are you sure you want to delete this job?')) {
       try {
         await deleteJob(token, jobId);
         await loadData();
       } catch (error) {
-        alert('Xóa công việc thất bại: ' + error.message);
+        alert('Delete job failed: ' + error.message);
       }
     }
   };
@@ -251,17 +259,17 @@ const MyProfileComp = () => {
       await loadData();
       setEditLanguageModal({ open: false, language: null, mode: 'create' });
     } catch (error) {
-      alert('Lưu ngôn ngữ thất bại: ' + error.message);
+      alert('Save language failed: ' + error.message);
     }
   };
 
   const handleLanguageDelete = async (languageId) => {
-    if (window.confirm('Bạn có chắc muốn xóa ngôn ngữ này?')) {
+    if (window.confirm('Are you sure you want to delete this language?')) {
       try {
         await deleteLanguage(token, languageId);
         await loadData();
       } catch (error) {
-        alert('Xóa ngôn ngữ thất bại: ' + error.message);
+        alert('Delete language failed: ' + error.message);
       }
     }
   };
@@ -276,17 +284,17 @@ const MyProfileComp = () => {
       await loadData();
       setEditContractModal({ open: false, contract: null, mode: 'create' });
     } catch (error) {
-      alert('Lưu hợp đồng thất bại: ' + error.message);
+      alert('Save contact failed: ' + error.message);
     }
   };
 
   const handleContractDelete = async (contractId) => {
-    if (window.confirm('Bạn có chắc muốn xóa hợp đồng này?')) {
+    if (window.confirm('Are you sure you want to delete this contact?')) {
       try {
         await deleteContract(token, contractId);
         await loadData();
       } catch (error) {
-        alert('Xóa hợp đồng thất bại: ' + error.message);
+        alert('Delete contact failed: ' + error.message);
       }
     }
   };
@@ -301,17 +309,17 @@ const MyProfileComp = () => {
       await loadData();
       setEditAchievementModal({ open: false, achievement: null, mode: 'create' });
     } catch (error) {
-      alert('Lưu thành tựu thất bại: ' + error.message);
+      alert('Save achievement failed: ' + error.message);
     }
   };
 
   const handleAchievementDelete = async (achievementId) => {
-    if (window.confirm('Bạn có chắc muốn xóa thành tựu này?')) {
+    if (window.confirm('Are you sure you want to delete this achievement?')) {
       try {
         await deleteAchievement(token, achievementId);
         await loadData();
       } catch (error) {
-        alert('Xóa thành tựu thất bại: ' + error.message);
+        alert('Delete achievement failed: ' + error.message);
       }
     }
   };
@@ -355,17 +363,17 @@ const MyProfileComp = () => {
       await loadData();
       setEditProductModal({ open: false, product: null, mode: 'create' });
     } catch (error) {
-      alert('Lưu sản phẩm thất bại: ' + error.message);
+      alert('Save product failed: ' + error.message);
     }
   };
 
   const handleProductDelete = async (productId) => {
-    if (window.confirm('Bạn có chắc muốn xóa sản phẩm này? Tất cả ảnh sản phẩm cũng sẽ bị xóa.')) {
+    if (window.confirm('Are you sure you want to delete this product? All product images will also be deleted.')) {
       try {
         await deleteProduct(token, productId);
         await loadData();
       } catch (error) {
-        alert('Xóa sản phẩm thất bại: ' + error.message);
+        alert('Delete product failed: ' + error.message);
       }
     }
   };
@@ -380,7 +388,7 @@ const MyProfileComp = () => {
       await loadData();
       setEditProductImageModal({ open: false, productImage: null, productId: null, mode: 'create' });
     } catch (error) {
-      alert('Lưu ảnh sản phẩm thất bại: ' + error.message);
+      alert('Save product image failed: ' + error.message);
     }
   };
 
@@ -394,17 +402,17 @@ const MyProfileComp = () => {
       await loadData();
       setEditSkillModal({ open: false, skill: null, mode: 'create' });
     } catch (error) {
-      alert('Lưu kỹ năng thất bại: ' + error.message);
+      alert('Save skill failed: ' + error.message);
     }
   };
 
   const handleSkillDelete = async (skillId) => {
-    if (window.confirm('Bạn có chắc muốn xóa kỹ năng này?')) {
+    if (window.confirm('Are you sure you want to delete this skill?')) {
       try {
         await deleteSkill(token, skillId);
         await loadData();
       } catch (error) {
-        alert('Xóa kỹ năng thất bại: ' + error.message);
+        alert('Delete skill failed: ' + error.message);
       }
     }
   };
@@ -419,28 +427,28 @@ const MyProfileComp = () => {
       await loadData();
       setEditTargetModal({ open: false, target: null, mode: 'create' });
     } catch (error) {
-      alert('Lưu mục tiêu thất bại: ' + error.message);
+      alert('Save goal failed: ' + error.message);
     }
   };
 
   const handleTargetDelete = async (targetId) => {
-    if (window.confirm('Bạn có chắc muốn xóa mục tiêu này?')) {
+    if (window.confirm('Are you sure you want to delete this goal?')) {
       try {
         await deleteTarget(token, targetId);
         await loadData();
       } catch (error) {
-        alert('Xóa mục tiêu thất bại: ' + error.message);
+        alert('Delete goal failed: ' + error.message);
       }
     }
   };
 
   const handleProductImageDelete = async (imageId) => {
-    if (window.confirm('Bạn có chắc muốn xóa ảnh sản phẩm này?')) {
+    if (window.confirm('Are you sure you want to delete this product image?')) {
       try {
         await deleteProductImage(token, imageId);
         await loadData();
       } catch (error) {
-        alert('Xóa ảnh sản phẩm thất bại: ' + error.message);
+        alert('Delete product image failed: ' + error.message);
       }
     }
   };
@@ -499,7 +507,7 @@ const MyProfileComp = () => {
                 <h1 className="profile-name">
                   {(profile?.data?.first_name || profile?.first_name) || (profile?.data?.last_name || profile?.last_name)
                     ? `${profile?.data?.first_name || profile?.first_name || ''} ${profile?.data?.last_name || profile?.last_name || ''}`.trim()
-                    : profile?.data?.nickname || profile?.nickname || 'Chưa có tên'}
+                    : profile?.data?.nickname || profile?.nickname || 'No name'}
                 </h1>
                 {(profile?.data?.nickname || profile?.nickname) && (
                   <p className="profile-nickname">@{profile?.data?.nickname || profile?.nickname}</p>
@@ -518,7 +526,7 @@ const MyProfileComp = () => {
                   )}
                   {(profile?.data?.date_of_birth || profile?.date_of_birth) && (
                     <span className="meta-item">
-                      <span className="meta-icon">🎂</span> {new Date(profile?.data?.date_of_birth || profile?.date_of_birth).toLocaleDateString('vi-VN', { year: 'numeric', month: 'long', day: 'numeric' })}
+                      <span className="meta-icon">🎂</span> {new Date(profile?.data?.date_of_birth || profile?.date_of_birth).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                     </span>
                   )}
                   {(profile?.data?.marital_status || profile?.marital_status) && (
@@ -534,12 +542,12 @@ const MyProfileComp = () => {
           {/* Target Section - Full width, between profile header and main content */}
           <section className="profile-section editable-section target-section">
             <div className="section-header">
-              <h2 className="section-title">Mục Tiêu Nghề Nghiệp</h2>
+              <h2 className="section-title">Career Goals</h2>
               <button
                 className="add-btn"
                 onClick={() => setEditTargetModal({ open: true, target: null, mode: 'create' })}
               >
-                + Thêm mục tiêu
+                + Add Goal
               </button>
             </div>
             {loading && targets.length === 0 ? (
@@ -572,7 +580,7 @@ const MyProfileComp = () => {
                 ))}
               </div>
             ) : (
-              <p className="empty-message">Chưa có mục tiêu nghề nghiệp nào</p>
+              <p className="empty-message">No career goals yet</p>
             )}
           </section>
 
@@ -583,12 +591,12 @@ const MyProfileComp = () => {
               {/* Skills Section - Above Languages */}
               <section className="profile-section editable-section">
                 <div className="section-header">
-                  <h2 className="section-title">Kỹ Năng</h2>
+                  <h2 className="section-title">Skills</h2>
                   <button
                     className="add-btn"
                     onClick={() => setEditSkillModal({ open: true, skill: null, mode: 'create' })}
                   >
-                    + Thêm kỹ năng
+                    + Add Skill
                   </button>
                 </div>
                 {skills && skills.length > 0 ? (
@@ -615,19 +623,19 @@ const MyProfileComp = () => {
                     ))}
                   </div>
                 ) : (
-                  <p className="empty-message">Chưa có kỹ năng nào</p>
+                  <p className="empty-message">No skills yet</p>
                 )}
               </section>
 
               {/* Languages Section */}
               <section className="profile-section editable-section">
                 <div className="section-header">
-                  <h2 className="section-title">Ngôn Ngữ</h2>
+                  <h2 className="section-title">Languages</h2>
                   <button
                     className="add-btn"
                     onClick={() => setEditLanguageModal({ open: true, language: null, mode: 'create' })}
                   >
-                    + Thêm
+                    + Add
                   </button>
                 </div>
                 {languages && languages.length > 0 ? (
@@ -654,19 +662,19 @@ const MyProfileComp = () => {
                     ))}
                   </div>
                 ) : (
-                  <p className="empty-message">Chưa có ngôn ngữ nào</p>
+                  <p className="empty-message">No languages yet</p>
                 )}
               </section>
 
               {/* Images Section */}
               <section className="profile-section editable-section">
                 <div className="section-header">
-                  <h2 className="section-title">Hình Ảnh</h2>
+                  <h2 className="section-title">Images</h2>
                   <button
                     className="add-btn"
                     onClick={() => setEditImageModal({ open: true, image: null, mode: 'create' })}
                   >
-                    + Thêm
+                    + Add
                   </button>
                 </div>
                 {images && images.length > 0 ? (
@@ -692,19 +700,19 @@ const MyProfileComp = () => {
                     ))}
                   </div>
                 ) : (
-                  <p className="empty-message">Chưa có hình ảnh nào</p>
+                  <p className="empty-message">No images yet</p>
                 )}
               </section>
 
               {/* Contacts Section */}
               <section className="profile-section editable-section">
                 <div className="section-header">
-                  <h2 className="section-title">Liên Hệ</h2>
+                  <h2 className="section-title">Contact</h2>
                   <button
                     className="add-btn"
                     onClick={() => setEditContractModal({ open: true, contract: null, mode: 'create' })}
                   >
-                    + Thêm
+                    + Add
                   </button>
                 </div>
                 {contracts && contracts.length > 0 ? (
@@ -735,7 +743,7 @@ const MyProfileComp = () => {
                     ))}
                   </div>
                 ) : (
-                  <p className="empty-message">Chưa có thông tin liên hệ nào</p>
+                  <p className="empty-message">No contact information yet</p>
                 )}
               </section>
             </div>
@@ -745,12 +753,12 @@ const MyProfileComp = () => {
               {/* Educations Section with Edit Controls */}
               <section className="profile-section editable-section">
                 <div className="section-header">
-                  <h2 className="section-title">Học Vấn</h2>
+                  <h2 className="section-title">Education</h2>
                   <button
                     className="add-btn"
                     onClick={() => setEditEducationModal({ open: true, education: null, mode: 'create' })}
                   >
-                    + Thêm học vấn
+                    + Add Education
                   </button>
                 </div>
                 {educations && educations.length > 0 ? (
@@ -774,9 +782,9 @@ const MyProfileComp = () => {
                           </div>
                           <h3 className="timeline-title">{edu.school_name}</h3>
                           <div className="timeline-date">
-                            {edu.start_year && new Date(edu.start_year).toLocaleDateString('vi-VN', { year: 'numeric', month: 'long' })}
+                            {edu.start_year && new Date(edu.start_year).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}
                             {edu.start_year && edu.end_year && ' - '}
-                            {edu.end_year && new Date(edu.end_year).toLocaleDateString('vi-VN', { year: 'numeric', month: 'long' })}
+                            {edu.end_year && new Date(edu.end_year).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}
                           </div>
                           {edu.description && <p className="timeline-description">{edu.description}</p>}
                         </div>
@@ -784,25 +792,27 @@ const MyProfileComp = () => {
                     ))}
                   </div>
                 ) : (
-                  <p className="empty-message">Chưa có học vấn nào</p>
+                  <p className="empty-message">No education yet</p>
                 )}
               </section>
 
               {/* Jobs Section with Edit Controls */}
               <section className="profile-section editable-section">
                 <div className="section-header">
-                  <h2 className="section-title">Kinh Nghiệm Làm Việc</h2>
+                  <h2 className="section-title">Work Experience</h2>
                   <button
                     className="add-btn"
                     onClick={() => setEditJobModal({ open: true, job: null, mode: 'create' })}
                   >
-                    + Thêm công việc
+                    + Add Job
                   </button>
                 </div>
                 {jobs && jobs.length > 0 ? (
                   <div className="timeline">
                     {jobs.map((job) => (
-                      <div key={job.id} className="timeline-item editable-item">
+                      <div key={job.id} className="timeline-item-wrapper">
+                        <div className="timeline-dot"></div>
+                        <div className="timeline-item editable-item">
                         <div className="timeline-content">
                           <div className="item-edit-controls">
                             <button
@@ -822,29 +832,30 @@ const MyProfileComp = () => {
                             {job.job_name ? `${job.job_name} - ${job.company_name}` : job.company_name}
                           </h3>
                           <div className="timeline-date">
-                            {job.start_date && new Date(job.start_date).toLocaleDateString('vi-VN', { year: 'numeric', month: 'long' })}
+                              {job.start_date && new Date(job.start_date).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}
                             {job.start_date && job.end_date && ' - '}
-                            {job.end_date || 'Hiện tại'}
+                              {job.end_date || 'Present'}
                           </div>
                           {job.description && <p className="timeline-description">{job.description}</p>}
+                          </div>
                         </div>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <p className="empty-message">Chưa có kinh nghiệm làm việc nào</p>
+                  <p className="empty-message">No work experience yet</p>
                 )}
               </section>
 
               {/* Achievements Section with Edit Controls */}
               <section className="profile-section editable-section">
                 <div className="section-header">
-                  <h2 className="section-title">Thành Tựu</h2>
+                  <h2 className="section-title">Achievements</h2>
                   <button
                     className="add-btn"
                     onClick={() => setEditAchievementModal({ open: true, achievement: null, mode: 'create' })}
                   >
-                    + Thêm thành tựu
+                    + Add Achievement
                   </button>
                 </div>
                 {achievements && achievements.length > 0 ? (
@@ -873,19 +884,19 @@ const MyProfileComp = () => {
                     ))}
                   </div>
                 ) : (
-                  <p className="empty-message">Chưa có thành tựu nào</p>
+                  <p className="empty-message">No achievements yet</p>
                 )}
               </section>
 
               {/* Products Section with Edit Controls */}
               <section className="profile-section editable-section">
                 <div className="section-header">
-                  <h2 className="section-title">Sản Phẩm</h2>
+                  <h2 className="section-title">Products</h2>
                   <button
                     className="add-btn"
                     onClick={() => setEditProductModal({ open: true, product: null, mode: 'create' })}
                   >
-                    + Thêm sản phẩm
+                    + Add Product
                   </button>
                 </div>
                 {products && products.length > 0 ? (
@@ -910,7 +921,7 @@ const MyProfileComp = () => {
                             <button
                               className="add-image-btn"
                               onClick={() => setEditProductImageModal({ open: true, productImage: null, productId: product.id, mode: 'create' })}
-                              title="Thêm ảnh sản phẩm"
+                              title="Add Product Image"
                             >
                               📷
                             </button>
@@ -933,7 +944,7 @@ const MyProfileComp = () => {
                             {productImgs.length > 0 ? (
                               <div className="product-images-section">
                                 <div className="product-images-header">
-                                  <span className="product-images-count">Ảnh mô tả ({productImgs.length})</span>
+                                  <span className="product-images-count">Description Images ({productImgs.length})</span>
                                 </div>
                                 <div className="product-images-grid">
                                   {productImgs.map((img) => (
@@ -962,7 +973,7 @@ const MyProfileComp = () => {
                               </div>
                             ) : (
                               <div className="no-product-images">
-                                <p>Chưa có ảnh mô tả. Nhấn 📷 để thêm ảnh.</p>
+                                <p>No description images. Click 📷 to add images.</p>
                               </div>
                             )}
                           </div>
@@ -971,7 +982,7 @@ const MyProfileComp = () => {
                     })}
                   </div>
                 ) : (
-                  <p className="empty-message">Chưa có sản phẩm nào</p>
+                  <p className="empty-message">No products yet</p>
                 )}
               </section>
             </div>

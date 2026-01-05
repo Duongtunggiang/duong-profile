@@ -43,7 +43,7 @@ const EditProductImageModal = ({ productImage, productId, products, mode, onSave
     const file = e.target.files[0];
     if (file) {
       if (!file.type.startsWith('image/')) {
-        alert('Vui lòng chọn file ảnh');
+        alert('Please select an image file');
         return;
       }
       setSelectedFile(file);
@@ -56,7 +56,7 @@ const EditProductImageModal = ({ productImage, productId, products, mode, onSave
     
     let finalFormData = { ...formData };
     
-    // Nếu có file mới, upload trước
+    // If there's a new file, upload it first
     if (selectedFile) {
       setUploading(true);
       try {
@@ -64,7 +64,7 @@ const EditProductImageModal = ({ productImage, productId, products, mode, onSave
         const uploadResult = await uploadProductImageAPI(selectedFile, token);
         finalFormData.image_url = uploadResult.image_url;
       } catch (error) {
-        alert('Upload ảnh thất bại: ' + error.message);
+        alert('Image upload failed: ' + error.message);
         setUploading(false);
         return;
       }
@@ -72,7 +72,7 @@ const EditProductImageModal = ({ productImage, productId, products, mode, onSave
     }
     
     if (!finalFormData.image_url) {
-      alert('Vui lòng chọn ảnh');
+      alert('Please select an image');
       return;
     }
     
@@ -84,12 +84,12 @@ const EditProductImageModal = ({ productImage, productId, products, mode, onSave
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2>{mode === 'edit' ? 'Chỉnh sửa' : 'Thêm'} Ảnh Sản Phẩm</h2>
+          <h2>{mode === 'edit' ? 'Edit' : 'Add'} Product Image</h2>
           <button className="modal-close" onClick={onClose}>×</button>
         </div>
         <form onSubmit={handleSubmit} className="modal-form">
           <div className="form-group">
-            <label>Sản phẩm *</label>
+            <label>Product *</label>
             <select
               name="product_id"
               value={formData.product_id}
@@ -97,7 +97,7 @@ const EditProductImageModal = ({ productImage, productId, products, mode, onSave
               required
               disabled={mode === 'edit'}
             >
-              <option value="">Chọn sản phẩm...</option>
+              <option value="">Select product...</option>
               {products && products.map((product) => (
                 <option key={product.id} value={product.id}>
                   {product.product_name}
@@ -107,7 +107,7 @@ const EditProductImageModal = ({ productImage, productId, products, mode, onSave
           </div>
 
           <div className="form-group">
-            <label>Ảnh *</label>
+            <label>Image *</label>
             <input
               type="file"
               accept="image/*"
@@ -117,7 +117,7 @@ const EditProductImageModal = ({ productImage, productId, products, mode, onSave
               style={{ display: 'none' }}
             />
             <label htmlFor="product-image-file-input" className="file-input-label">
-              {preview ? '📷 Đổi ảnh' : '📷 Chọn ảnh'}
+              {preview ? '📷 Change Image' : '📷 Select Image'}
             </label>
             {preview && (
               <div className="image-preview">
@@ -138,22 +138,22 @@ const EditProductImageModal = ({ productImage, productId, products, mode, onSave
           </div>
 
           <div className="form-group">
-            <label>Mô tả</label>
+            <label>Description</label>
             <textarea
               name="description"
               value={formData.description}
               onChange={handleChange}
               rows="3"
-              placeholder="Nhập mô tả ảnh"
+              placeholder="Enter image description"
             />
           </div>
 
           <div className="modal-actions">
             <button type="button" className="btn-cancel" onClick={onClose}>
-              Hủy
+              Cancel
             </button>
             <button type="submit" className="btn-save" disabled={uploading}>
-              {uploading ? 'Đang upload...' : (mode === 'edit' ? 'Cập nhật' : 'Thêm')}
+              {uploading ? 'Uploading...' : (mode === 'edit' ? 'Update' : 'Add')}
             </button>
           </div>
         </form>
@@ -163,4 +163,3 @@ const EditProductImageModal = ({ productImage, productId, products, mode, onSave
 };
 
 export default EditProductImageModal;
-

@@ -50,37 +50,37 @@ const EditJobModal = ({ job, mode, onSave, onClose }) => {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2>{mode === 'edit' ? 'Chỉnh sửa' : 'Thêm'} Công Việc</h2>
+          <h2>{mode === 'edit' ? 'Edit' : 'Add'} Job</h2>
           <button className="modal-close" onClick={onClose}>×</button>
         </div>
         <form onSubmit={handleSubmit} className="modal-form">
           <div className="form-group">
-            <label>Tên công việc *</label>
+            <label>Job Title *</label>
             <input
               type="text"
               name="job_name"
               value={formData.job_name}
               onChange={handleChange}
               required
-              placeholder="Ví dụ: Software Engineer, Internship..."
+              placeholder="E.g.: Software Engineer, Internship..."
             />
           </div>
 
           <div className="form-group">
-            <label>Tên công ty *</label>
+            <label>Company Name *</label>
             <input
               type="text"
               name="company_name"
               value={formData.company_name}
               onChange={handleChange}
               required
-              placeholder="Nhập tên công ty"
+              placeholder="Enter company name"
             />
           </div>
 
           <div className="form-row">
             <div className="form-group">
-              <label>Ngày bắt đầu</label>
+              <label>Start Date</label>
               <input
                 type="date"
                 name="start_date"
@@ -89,34 +89,34 @@ const EditJobModal = ({ job, mode, onSave, onClose }) => {
               />
             </div>
             <div className="form-group">
-              <label>Ngày kết thúc</label>
+              <label>End Date</label>
               <input
                 type="text"
                 name="end_date"
                 value={formData.end_date}
                 onChange={handleChange}
-                placeholder="YYYY-MM-DD hoặc 'Now'"
+                placeholder="YYYY-MM-DD or 'Present'"
               />
             </div>
           </div>
 
           <div className="form-group">
-            <label>Mô tả</label>
+            <label>Description</label>
             <textarea
               name="description"
               value={formData.description}
               onChange={handleChange}
-              placeholder="Nhập mô tả công việc"
+              placeholder="Enter job description"
               rows="4"
             />
           </div>
 
           <div className="modal-actions">
             <button type="button" className="btn-cancel" onClick={onClose}>
-              Hủy
+              Cancel
             </button>
             <button type="submit" className="btn-save">
-              Lưu
+              Save
             </button>
           </div>
         </form>

@@ -39,39 +39,39 @@ const EditAchievementModal = ({ achievement, mode, onSave, onClose }) => {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2>{mode === 'edit' ? 'Chỉnh sửa' : 'Thêm'} Thành Tựu</h2>
+          <h2>{mode === 'edit' ? 'Edit' : 'Add'} Achievement</h2>
           <button className="modal-close" onClick={onClose}>×</button>
         </div>
         <form onSubmit={handleSubmit} className="modal-form">
           <div className="form-group">
-            <label>Tên thành tựu *</label>
+            <label>Achievement Name *</label>
             <input
               type="text"
               name="achievement_name"
               value={formData.achievement_name}
               onChange={handleChange}
               required
-              placeholder="Nhập tên thành tựu"
+              placeholder="Enter achievement name"
             />
           </div>
 
           <div className="form-group">
-            <label>Mô tả</label>
+            <label>Description</label>
             <textarea
               name="description"
               value={formData.description}
               onChange={handleChange}
               rows="4"
-              placeholder="Nhập mô tả thành tựu"
+              placeholder="Enter achievement description"
             />
           </div>
 
           <div className="modal-actions">
             <button type="button" className="btn-cancel" onClick={onClose}>
-              Hủy
+              Cancel
             </button>
             <button type="submit" className="btn-save">
-              {mode === 'edit' ? 'Cập nhật' : 'Thêm'}
+              {mode === 'edit' ? 'Update' : 'Add'}
             </button>
           </div>
         </form>

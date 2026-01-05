@@ -37,45 +37,45 @@ const EditLanguageModal = ({ language, mode, onSave, onClose }) => {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2>{mode === 'edit' ? 'Chỉnh sửa' : 'Thêm'} Ngôn Ngữ</h2>
+          <h2>{mode === 'edit' ? 'Edit' : 'Add'} Language</h2>
           <button className="modal-close" onClick={onClose}>×</button>
         </div>
         <form onSubmit={handleSubmit} className="modal-form">
           <div className="form-group">
-            <label>Ngôn ngữ *</label>
+            <label>Language *</label>
             <input
               type="text"
               name="language"
               value={formData.language}
               onChange={handleChange}
               required
-              placeholder="Ví dụ: Tiếng Anh, Tiếng Nhật..."
+              placeholder="E.g.: English, Japanese..."
             />
           </div>
 
           <div className="form-group">
-            <label>Trình độ *</label>
+            <label>Proficiency Level *</label>
             <select
               name="level"
               value={formData.level}
               onChange={handleChange}
               required
             >
-              <option value="">Chọn trình độ...</option>
-              <option value="Cơ bản">Cơ bản</option>
-              <option value="Trung bình">Trung bình</option>
-              <option value="Khá">Khá</option>
-              <option value="Tốt">Tốt</option>
-              <option value="Thành thạo">Thành thạo</option>
+              <option value="">Select level...</option>
+              <option value="Basic">Basic</option>
+              <option value="Intermediate">Intermediate</option>
+              <option value="Good">Good</option>
+              <option value="Very Good">Very Good</option>
+              <option value="Fluent">Fluent</option>
             </select>
           </div>
 
           <div className="modal-actions">
             <button type="button" className="btn-cancel" onClick={onClose}>
-              Hủy
+              Cancel
             </button>
             <button type="submit" className="btn-save">
-              Lưu
+              Save
             </button>
           </div>
         </form>

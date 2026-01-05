@@ -54,7 +54,7 @@ const EditProfileModal = ({ profile, onSave, onClose }) => {
     const file = e.target.files[0];
     if (file) {
       if (!file.type.startsWith('image/')) {
-        alert('Vui lòng chọn file ảnh');
+        alert('Please select an image file');
         return;
       }
       setAvatarFile(file);
@@ -66,7 +66,7 @@ const EditProfileModal = ({ profile, onSave, onClose }) => {
     const file = e.target.files[0];
     if (file) {
       if (!file.type.startsWith('image/')) {
-        alert('Vui lòng chọn file ảnh');
+        alert('Please select an image file');
         return;
       }
       setCoverFile(file);
@@ -82,13 +82,13 @@ const EditProfileModal = ({ profile, onSave, onClose }) => {
       const token = getToken();
       const dataToSave = { ...formData };
       
-      // Upload avatar nếu có file mới
+      // Upload avatar if there is a new file
       if (avatarFile) {
         const uploadResult = await uploadImage(avatarFile, token);
         dataToSave.avatar_url = uploadResult.image_url;
       }
       
-      // Upload cover nếu có file mới
+      // Upload cover if there is a new file
       if (coverFile) {
         const uploadResult = await uploadImage(coverFile, token);
         dataToSave.cover_url = uploadResult.image_url;
@@ -98,7 +98,7 @@ const EditProfileModal = ({ profile, onSave, onClose }) => {
       await onSave(dataToSave);
       setUploading(false);
     } catch (error) {
-      alert('Upload ảnh thất bại: ' + error.message);
+      alert('Image upload failed: ' + error.message);
       setUploading(false);
     }
   };
@@ -107,41 +107,41 @@ const EditProfileModal = ({ profile, onSave, onClose }) => {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2>Chỉnh sửa Profile</h2>
+          <h2>Edit Profile</h2>
           <button className="modal-close" onClick={onClose}>×</button>
         </div>
         <form onSubmit={handleSubmit} className="modal-form">
           <div className="form-row">
             <div className="form-group">
-              <label>Tên</label>
+              <label>First Name</label>
               <input
                 type="text"
                 name="first_name"
                 value={formData.first_name}
                 onChange={handleChange}
-                placeholder="Nhập tên"
+                placeholder="Enter first name"
               />
             </div>
             <div className="form-group">
-              <label>Họ</label>
+              <label>Last Name</label>
               <input
                 type="text"
                 name="last_name"
                 value={formData.last_name}
                 onChange={handleChange}
-                placeholder="Nhập họ"
+                placeholder="Enter last name"
               />
             </div>
           </div>
 
           <div className="form-group">
-            <label>Biệt danh</label>
+            <label>Nickname</label>
             <input
               type="text"
               name="nickname"
               value={formData.nickname}
               onChange={handleChange}
-              placeholder="Nhập biệt danh"
+              placeholder="Enter nickname"
             />
           </div>
 
@@ -156,7 +156,7 @@ const EditProfileModal = ({ profile, onSave, onClose }) => {
               style={{ display: 'none' }}
             />
             <label htmlFor="avatar-file-input" className="file-input-label">
-              {avatarPreview ? '📷 Đổi avatar' : '📷 Chọn avatar'}
+              {avatarPreview ? '📷 Change avatar' : '📷 Select avatar'}
             </label>
             {avatarPreview && (
               <div className="image-preview-small">
@@ -177,7 +177,7 @@ const EditProfileModal = ({ profile, onSave, onClose }) => {
           </div>
 
           <div className="form-group">
-            <label>Ảnh bìa</label>
+            <label>Cover Image</label>
             <input
               type="file"
               accept="image/*"
@@ -187,7 +187,7 @@ const EditProfileModal = ({ profile, onSave, onClose }) => {
               style={{ display: 'none' }}
             />
             <label htmlFor="cover-file-input" className="file-input-label">
-              {coverPreview ? '📷 Đổi ảnh bìa' : '📷 Chọn ảnh bìa'}
+              {coverPreview ? '📷 Change cover image' : '📷 Select cover image'}
             </label>
             {coverPreview && (
               <div className="image-preview-small">
@@ -208,55 +208,55 @@ const EditProfileModal = ({ profile, onSave, onClose }) => {
           </div>
 
           <div className="form-group">
-            <label>Tiểu sử</label>
+            <label>Bio</label>
             <textarea
               name="bio"
               value={formData.bio}
               onChange={handleChange}
-              placeholder="Nhập tiểu sử"
+              placeholder="Enter bio"
               rows="4"
             />
           </div>
 
           <div className="form-row">
             <div className="form-group">
-              <label>Địa điểm</label>
+              <label>Location</label>
               <input
                 type="text"
                 name="location"
                 value={formData.location}
                 onChange={handleChange}
-                placeholder="Nhập địa điểm"
+                placeholder="Enter location"
               />
             </div>
             <div className="form-group">
-              <label>Quê quán</label>
+              <label>Hometown</label>
               <input
                 type="text"
                 name="hometown"
                 value={formData.hometown}
                 onChange={handleChange}
-                placeholder="Nhập quê quán"
+                placeholder="Enter hometown"
               />
             </div>
           </div>
 
           <div className="form-row">
             <div className="form-group">
-              <label>Tình trạng hôn nhân</label>
+              <label>Marital Status</label>
               <select
                 name="marital_status"
                 value={formData.marital_status}
                 onChange={handleChange}
               >
-                <option value="">Chọn...</option>
-                <option value="Độc thân">Độc thân</option>
-                <option value="Đã kết hôn">Đã kết hôn</option>
-                <option value="Đã ly hôn">Đã ly hôn</option>
+                <option value="">Select...</option>
+                <option value="Single">Single</option>
+                <option value="Married">Married</option>
+                <option value="Divorced">Divorced</option>
               </select>
             </div>
             <div className="form-group">
-              <label>Ngày sinh</label>
+              <label>Date of Birth</label>
               <input
                 type="date"
                 name="date_of_birth"
@@ -268,10 +268,10 @@ const EditProfileModal = ({ profile, onSave, onClose }) => {
 
           <div className="modal-actions">
             <button type="button" className="btn-cancel" onClick={onClose}>
-              Hủy
+              Cancel
             </button>
             <button type="submit" className="btn-save" disabled={uploading}>
-              {uploading ? 'Đang upload...' : 'Lưu'}
+              {uploading ? 'Uploading...' : 'Save'}
             </button>
           </div>
         </form>

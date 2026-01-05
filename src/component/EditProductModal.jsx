@@ -57,9 +57,9 @@ const EditProductModal = ({ product, mode, onSave, onClose, productImages = [] }
   const handleImageFileChange = async (index, file) => {
     if (!file) return;
     
-    // Kiểm tra file type
+    // Check file type
     if (!file.type.startsWith('image/')) {
-      alert('Vui lòng chọn file ảnh');
+      alert('Please select an image file');
       return;
     }
     
@@ -94,10 +94,10 @@ const EditProductModal = ({ product, mode, onSave, onClose, productImages = [] }
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Kiểm tra có ảnh nào không
+    // Check if there are any images
     const hasImages = images.some(img => img.file || img.image_url);
     if (!hasImages) {
-      alert('Vui lòng thêm ít nhất 1 ảnh cho sản phẩm');
+      alert('Please add at least 1 product image');
       return;
     }
 
@@ -106,19 +106,19 @@ const EditProductModal = ({ product, mode, onSave, onClose, productImages = [] }
       const token = getToken();
       const uploadedImages = [];
       
-      // Upload từng ảnh nếu có file mới
+      // Upload each image if there is a new file
       for (let i = 0; i < images.length; i++) {
         const img = images[i];
         
         if (img.file) {
-          // Upload file mới
+          // Upload new file
           const uploadResult = await uploadProductImage(img.file, token);
           uploadedImages.push({
             image_url: uploadResult.image_url,
             description: img.description || '',
           });
         } else if (img.image_url) {
-          // Giữ nguyên ảnh cũ
+          // Keep existing image
           uploadedImages.push({
             image_url: img.image_url,
             description: img.description || '',
@@ -127,12 +127,12 @@ const EditProductModal = ({ product, mode, onSave, onClose, productImages = [] }
       }
       
       if (uploadedImages.length === 0) {
-        alert('Vui lòng thêm ít nhất 1 ảnh cho sản phẩm');
+        alert('Please add at least 1 product image');
         setUploading(false);
         return;
       }
 
-      // Ảnh đầu tiên → product_image, các ảnh còn lại → productImages (với description)
+      // First image → product_image, remaining images → productImages (with description)
       const productData = {
         ...formData,
         product_image: uploadedImages[0]?.image_url || '',
@@ -145,7 +145,7 @@ const EditProductModal = ({ product, mode, onSave, onClose, productImages = [] }
       if (!productData.product_url) delete productData.product_url;
       await onSave(productData, product?.id);
     } catch (error) {
-      alert('Upload ảnh thất bại: ' + error.message);
+      alert('Image upload failed: ' + error.message);
       setUploading(false);
     }
   };
@@ -154,24 +154,24 @@ const EditProductModal = ({ product, mode, onSave, onClose, productImages = [] }
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2>{mode === 'edit' ? 'Chỉnh sửa' : 'Thêm'} Sản Phẩm</h2>
+          <h2>{mode === 'edit' ? 'Edit' : 'Add'} Product</h2>
           <button className="modal-close" onClick={onClose}>×</button>
         </div>
         <form onSubmit={handleSubmit} className="modal-form">
           <div className="form-group">
-            <label>Tên sản phẩm *</label>
+            <label>Product Name *</label>
             <input
               type="text"
               name="product_name"
               value={formData.product_name}
               onChange={handleChange}
               required
-              placeholder="Nhập tên sản phẩm"
+              placeholder="Enter product name"
             />
           </div>
 
           <div className="form-group">
-            <label>URL sản phẩm</label>
+            <label>Product URL</label>
             <input
               type="url"
               name="product_url"
@@ -182,20 +182,20 @@ const EditProductModal = ({ product, mode, onSave, onClose, productImages = [] }
           </div>
 
           <div className="form-group">
-            <label>Ảnh sản phẩm *</label>
+            <label>Product Images *</label>
             <div className="images-input-list">
               {images.map((image, index) => (
                 <div key={index} className="image-input-item">
                   <div className="image-item-header">
                     <span className="image-item-label">
-                      {index === 0 ? 'Ảnh chính' : `Ảnh mô tả ${index}`}
+                      {index === 0 ? 'Main Image' : `Description Image ${index}`}
                     </span>
                     {index > 0 && (
                       <button
                         type="button"
                         className="remove-image-btn"
                         onClick={() => handleRemoveImage(index)}
-                        title="Xóa ảnh này"
+                        title="Remove this image"
                       >
                         ×
                       </button>
@@ -214,7 +214,7 @@ const EditProductModal = ({ product, mode, onSave, onClose, productImages = [] }
                       style={{ display: 'none' }}
                     />
                     <label htmlFor={`image-file-${index}`} className="file-input-label">
-                      {image.preview ? '📷 Đổi ảnh' : '📷 Chọn ảnh'}
+                      {image.preview ? '📷 Change Image' : '📷 Select Image'}
                     </label>
                     {image.preview && (
                       <div className="image-preview">
@@ -238,17 +238,17 @@ const EditProductModal = ({ product, mode, onSave, onClose, productImages = [] }
                       <textarea
                         value={image.description}
                         onChange={(e) => handleImageDescriptionChange(index, e.target.value)}
-                        placeholder="Mô tả cho ảnh này (tùy chọn)"
+                        placeholder="Description for this image (optional)"
                         rows="2"
                         className="image-description-input"
                       />
                     </div>
                   )}
                   {index === 0 && images.length > 1 && (
-                    <small className="image-note">Ảnh đầu tiên sẽ là ảnh chính của sản phẩm</small>
+                    <small className="image-note">First image will be the main product image</small>
                   )}
                   {index > 0 && (
-                    <small className="image-note">Ảnh này sẽ được thêm vào danh sách ảnh mô tả với mô tả riêng</small>
+                    <small className="image-note">This image will be added to the description images list with its own description</small>
                   )}
                 </div>
               ))}
@@ -257,17 +257,17 @@ const EditProductModal = ({ product, mode, onSave, onClose, productImages = [] }
                 className="add-image-input-btn"
                 onClick={handleAddImage}
               >
-                + Thêm ảnh mô tả
+                + Add Description Image
               </button>
             </div>
           </div>
 
           <div className="modal-actions">
             <button type="button" className="btn-cancel" onClick={onClose}>
-              Hủy
+              Cancel
             </button>
             <button type="submit" className="btn-save" disabled={uploading}>
-              {uploading ? 'Đang upload...' : (mode === 'edit' ? 'Cập nhật' : 'Thêm')}
+              {uploading ? 'Uploading...' : (mode === 'edit' ? 'Update' : 'Add')}
             </button>
           </div>
         </form>
