@@ -28,7 +28,7 @@ const HeaderComp = () => {
       <div className="header-content">
         <Link to="/" className="header-logo">
           <span className="logo-icon">✨</span>
-          <span className="logo-text">My Profile</span>
+          <span className="logo-text">Duong Profile</span>
         </Link>
 
         {authenticated && (
